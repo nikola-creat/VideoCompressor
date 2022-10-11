@@ -1,0 +1,124 @@
+FFmpeg Guide - How to Reduce Video File Size with FFmpeg
+FFmpeg can compress video size on Windows, macOS, or Linux for YouTube, Facebook, Instagram, email, etc. For novice users, however, it's difficult to get started with FFmpeg. Forums like StackExchange and superuser are flooded with questions about compressing video in FFmpeg. For example,
+
+"I have a 1080p video 3 minutes long and want to bring it down to 100MB in size. Tried changing bit rate ffmpeg -i input.mp4 -b 1000000 output.mp4, also tried ffmpeg -i input.mp4 -vcodec libx265 -crf 20 output.mp4 Tried changing -crf between 18 to 24, used both libx264,265 but it all resulted in nearly same output size, sometimes it even got bigger instead of smaller."
+
+To compress videos in FFmpeg, you should make sure the common-line is right. Start with the common-line examples below using FFmpeg. You can also reduce video size using FFmpeg in Python. If you can't handle FFmpeg, or FFmpeg compression performance is not satisfying, try the FFmpeg alternative below.
+
+Can't Handle FFmpeg? Try Video Compression Software
+FFmpeg is not easy to get started for novice users. To make video compression easier and more efficient, use a solid video compression tool, WinX HD Video Converter Deluxe.
+
+No skills required, simple to use. Compress videos within 3 clicks!
+Convert video codec formats, cut out unwanted parts, lower down video resolution/frame rate/bit rate, etc.
+Cut video size up to 90% off thanks to advanced intraframe and interframe coding and compression algorithms.
+No noticeable quality loss after compression with the built-in HQ engine and de-interlacing engine.
+Blazing fast compression speed with the support for hardware acceleration.
+Free Download
+For Win 7 or later
+ Free Download
+for Mac OS X 10.6 or later
+Table of Content
+Part 1. How to Reduce Video Size in FFmpeg (Command-line)
+Part 2. How to Compress Video using FFmpeg in Python
+Part 3. FAQs about Compressing Video with FFmpeg
+Part 1. How to Reduce Video Size with FFmpeg (Command-Line)
+1. Set up FFmpeg on Windows, macOS, or Linux
+
+If you haven't installed FFmpeg on your computer, here's how to download FFmpeg and finish the setup process on your computer. For Windows users, Windows Powershell is recommended over Command-Line. Open Windows Powershell from the start menu, and start with the compression command-line in FFmpeg.
+
+On Windows
+
+Download the zip file of the latest version (V4.3.3 released on 2022-04-16). Unzip the FFmpeg zip file by using any file archiver on your Windows PC.
+Rename the extracted folder to ffmpeg and move into the root of C: drive.
+Run cmd as an administrator and run the following command: setx /m PATH "C:\ffmpeg\bin;%PATH%"
+Restart your Windows PC and run the command to check whether FFmpeg is installed. ffmpeg -version
+On Mac
+
+Go to FFmpeg official download page. Click the Mac icon under the Get packages & executable section.
+Click the popping up link Static builds for macOS 64-bit. Head to the FFmpeg section.
+Click Download as ZIP. After the download completes, click the zip file on your Mac to unzip it.
+Copy and paste the ffmpeg file to a location. On the main menu, select Plugins > Animation Plugin > Animation Plugin pane.
+Click the drop-down icon of the Load Animated Avatar, select the animated avatar, select MP4 under Output.
+Click Browse button in the FFmpeg Library. Specify where FFmpeg is located and click it to open. Now, ffmpeg is added to the animation plugin and installed successfully on your Mac.
+2. Input video compression command-line
+
+There are few ways to make video size smaller, such as a more efficient codec format (H.265 compresses data 30% smaller than H.264), lower bitrate or fps, shorter video length. Here we take some typical command-line examples to show you how to compress MP4/MOV/WebM/4K video size using FFmpeg.
+
+Command-line - Compress and Convert MP4 to WMV
+ffmpeg -i input.mp4 -b 1000k -vcodec wmv2 -acodec wmav2 -crf 19 -filter:v fps=fps=24 output.wmv
+
+Command-line - Compress and Convert MP4 to Webm for YouTube, Ins, Facebook
+ffmpeg -i source.mp4 -c:v libvpx-vp9 -b:v 0.33M -c:a libopus -b:a 96k \
+-filter:v scale=960x540 target.webm
+
+Command-line - Compress and Convert H.264 to H.265 for Higher Compression
+ffmpeg -i input.mp4 -vcodec libx265 -crf 28 output.mp4
+
+Command-line -Set CRF in FFmpeg to Reduce Video File Size
+ffmpeg -i input.mp4 -vcodec libx264 -crf 24 output.mp4
+
+Command-line - Reduce video frame size to make 4K/1080P FHD video smaller
+ffmpeg -i input.avi -vf scale=1280:720 output.avi
+
+Command-line - resize video in FFmpeg to reduce video size
+ffmpeg -i input.avi -vf scale=852×480 output.avi
+You can resize your video to a specific size 480p, 720p, 1080p, etc. in FFmpeg.
+
+If you need to resize video in FFmpeg but keep the original aspect ratio, specify only one component, width or height, and set the other component to -1, for eample, ffmpeg -i input.jpg -vf scale=852:-1 output_852.png
+
+compress video FFmpeg
+To make the command line clearer, below are what some common FFmpeg command-line options specify, including -c:v, -b:v, -c:a, -b:a, CRF. These options are frequently used for reducing video size in FFmpeg.
+
+-c:v: video codec
+-b:v: video bitrate
+-c:a: audio codec
+-b:a: audio bitrate
+-filter:v: a filter to video stream
+-f is used to explicitly specify the container format, -f mp4, -f wmv, -f webm, etc.
+CRF (Constant Rate Factor): set the CRF to lower the bit rate but retain better quality. The lower crf, the higher the bitrate. According to test, setting crf to 24 reduce a 250MB video to 70MB without losing the quality noticeably. Use ffmpeg -i input.avi -vcodec libx264 -crf 24 output.avi, a 1GB video can be compressed to 200MB.
+
+3. Start reducing video file size in FFmpeg
+
+Hit enter and the video compression process should begin. Now, FFmpeg is running to do the video compression job. The video processing progress is showing at the bottom. Tips: compressing 4K UHD videos in FFmpeg is CPU intensive, you'd better shut down other programs running background on your device.
+
+4. Done!
+
+When the video compression completes, the output video file should appear at your specified location. Check for the output video file size and figure out the FFmpeg video compression ratio.
+
+Related: How to Compress Video Media File Size in PowerPoint, Adobe Tutorial: How to Compress Video in Adobe Media Encoder
+
+Part 2. How to Compress Video Size using FFmpeg in Python?
+FFmpeg-python is only a Python wrapper for FFmpeg. You still need to install FFmpeg on Windows or macOS computer. Then make the following script for reducing (MP4/MKV/MOV/WebM, etc.) video size in Python. Subprocess is the only module being required. Make sure you run the command in run() function. It's more complicated to compress video size using FFmpeg in Python. If you can't handle FFmpeg in Python, resort to other easy-to-use free video compression software.
+
+import subprocess
+result = subprocess.run('ffmpeg -i output.mp4 -b 800k output.mp4')
+print(result)
+
+Some users encounter System cannot find the file specified error when compressing a video using FFmpeg in python. The error message says "FileNotFoundError: [WinError 2] The system cannot find the file specified". The error means users don't have FFmpeg installed or the installation doesn't finish. You have to install FFmpeg because ffmpeg-python is just a Python wrapper for FFmpeg.
+
+compress video FFmpeg Python
+Part 3. FAQs about Compressing Video with FFmpeg
+How can I reduce video size with FFmpeg?
+
+Download and set up FFmpeg on your computer, use command line to compress video with FFmpeg by changing video codec format, lowering down bitrate, cutting video length, etc. For example, set CRF in FFmpeg to reduce video file size (ffmpeg -i input.mp4 -vcodec libx264 -crf 24 output.mp4), resize 4K/1080p to 720p for smaller file size (ffmpeg -i input.avi -vf scale=1280:720 output.avi).
+
+How do I compress a video without losing quality FFmpeg?
+
+You can use FFmpeg to resize video to compress MP4/MOV/WebM etc. formatted videos without losing quality. For example, try the following command line: ffmpeg -i input.avi -vf scale=1280:720 output.avi, to cut out unwanted frames. It's also a good way to resize video with FFmpeg without losing quaity by using slow preset that always outputs good quality. For example, ffmpeg -i input.mp4 -vf scale=1280:720 - preset slow - crf 18 output.mp4.
+
+How to get specific size of a video with FFmpeg?
+
+If you need to get specific video size with FFmpeg, use -crf or two passes. You are not suggested to set -fs that is not accurate and stops encoding when the output video size reaches the size you set. To get the video size after you use FFmpeg to compress your video to specific size, use the PHP function filesize php$filesize_in_bytes = filesize(compressed_video.mp4)
+
+How to significantly compress video size with ffmpeg without quality loss?
+
+A user reported that he tried changing bitrate using ffmpeg to compress video size and also tried changing -crf between 18 to 24 but it resulted in the same output file size, sometimes, it even got larger file size instead of smaller. So, how to reduce video size significantly with FFmpeg without quality loss? You should get a good result by converting your source video codec to H.265. The output video would be between 2-8x smaller in size, without any noticeable loss in quality.
+
+How to reduce the size of a video with FFmpeg to a target size?
+
+Want to reduce the size of a video to be able to send it via email or Whatsapp? Try the following command to compress video with FFmpeg to a target size. Here we compress a MP4 video to 25MB, the maximum file size that Email accepts. Set the -maxrate and -bufsize to lower down the average bit rate and the output video size could be reduced by up to 10%. The -bufsize value is important. Small value of -bufsize can lead to bad quality.
+
+compress video with  FFmpeg
+FFmpeg CRF - what is -crf used for in FFmpeg?
+
+CRF refers to Constant Rate Factor. The range of the CRF value is 0-51, 0 is lossless and 51 is the worst quality. A lower value of CRF means higher quality. 17–28 is recommended since 17 is visually lossless. Increasing the CRF value +6 generally leads to half of the video file size. You can set the CRF value to keep a good balance of video size and video quality in FFmpeg.
